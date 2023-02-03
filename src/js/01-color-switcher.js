@@ -11,6 +11,7 @@ stop.addEventListener('click', stopChangeColor);
 
 let timerId = null;
 function startChangeColor() {
+  body.style.backgroundColor = `${getRandomHexColor()}`;
   timerId = setInterval(() => {
     body.style.backgroundColor = `${getRandomHexColor()}`;
   }, 1000);
