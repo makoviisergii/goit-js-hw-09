@@ -2,11 +2,11 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
 const input = document.getElementById('datetime-picker');
-const days = document.querySelector('[data-days]');
-const hours = document.querySelector('[data-hours]');
-const minutes = document.querySelector('[data-minutes]');
-const seconds = document.querySelector('[data-seconds]');
-const startBtn = document.querySelector('[data-start]');
+const daysEl = document.querySelector('[data-days]');
+const hoursEl = document.querySelector('[data-hours]');
+const minutesEl = document.querySelector('[data-minutes]');
+const secondsEl = document.querySelector('[data-seconds]');
+const startBtn = document.querySelector('button[data-start]');
 
 const options = {
   enableTime: true,
@@ -20,19 +20,38 @@ const options = {
 
 flatpickr('#datetime-picker', options);
 
-input.appendto;
+input.addEventListener('input', getInterval);
+startBtn.addEventListener('click', onTimer);
 
-startBtn.disabled = 'true';
+let interval = 0;
 
-const date = new Date();
+function getInterval(event) {
+  const curentTime = Date.now();
+  const endTime = Date.parse(event.target.value);
+  interval = endTime - curentTime;
+  if (interval <= 0) {
+    window.alert('Please choose a date in the future');
+  }
+}
 
-onClose(selectedDates);
+function pud(value) {
+  return String(value).padStart(2, '0');
+}
 
-console.log(selectedDates[0]);
-console.log('Date: ', date);
-
-// if () ) {
-// }
+function onTimer() {
+  if (interval) {
+    startBtn.disabled = 'true';
+    const timerId = setInterval(() => {
+      interval -= 1000;
+      const timeObj = convertMs(interval);
+      console.log(interval);
+      if (interval <= 1000) {
+        clearInterval(timerId);
+      }
+      return updaitTimer(timeObj);
+    }, 1000);
+  }
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -53,6 +72,13 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+// console.log(convertMs(ms));
+
+function updaitTimer(timeObj) {
+  console.log(timeObj);
+  const { days, hours, minutes, seconds } = timeObj;
+  daysEl.textContent = pud(days);
+  hoursEl.textContent = pud(hours);
+  minutesEl.textContent = pud(minutes);
+  secondsEl.textContent = pud(seconds);
+}
