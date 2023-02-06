@@ -6,10 +6,11 @@ function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
+let timerId = null;
+
 start.addEventListener('click', startChangeColor);
 stop.addEventListener('click', stopChangeColor);
 
-let timerId = null;
 function startChangeColor() {
   body.style.backgroundColor = `${getRandomHexColor()}`;
   timerId = setInterval(() => {
