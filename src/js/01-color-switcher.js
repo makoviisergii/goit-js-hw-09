@@ -10,7 +10,7 @@ let timerId = null;
 
 start.addEventListener('click', startChangeColor);
 stop.addEventListener('click', stopChangeColor);
-
+stop.disabled = true;
 function startChangeColor() {
   body.style.backgroundColor = `${getRandomHexColor()}`;
   timerId = setInterval(() => {
