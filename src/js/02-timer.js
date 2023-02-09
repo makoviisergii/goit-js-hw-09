@@ -20,11 +20,12 @@ const options = {
       Notiflix.Notify.failure('Please choose a date in the future');
       btnStart.disabled = true;
     } else {
-      Notiflix.Notify.success('Good! Click "Start"');
+      Notiflix.Notify.success('Click "Start"');
       btnStart.disabled = false;
     }
   },
 };
+
 flatpickr(text, options);
 function convertMs(ms) {
   const second = 1000;
@@ -37,9 +38,11 @@ function convertMs(ms) {
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
   return { days, hours, minutes, seconds };
 }
+
 function addLeadingZero(value) {
   return value.toString().padStart(2, '0');
 }
+
 btnStart.addEventListener('click', () => {
   let timer = setInterval(() => {
     let countdown = new Date(text.value) - new Date();
@@ -50,12 +53,8 @@ btnStart.addEventListener('click', () => {
       hours.textContent = addLeadingZero(timeObject.hours);
       minutes.textContent = addLeadingZero(timeObject.minutes);
       seconds.textContent = addLeadingZero(timeObject.seconds);
-      if (countdown <= 10000) {
-        timerHtml.style.color = 'tomato';
-      }
     } else {
-      Notiflix.Notify.success('Countdown finished');
-      timerHtml.style.color = 'black';
+      Notiflix.Notify.success('Launch!!!');
       clearInterval(timer);
     }
   }, 1000);
